@@ -1,24 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
-
+import Login from './components/login/Login';
+import { useState, createContext } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './components/login/Home';
+import Profile from './components/login/profile';
+import Additem from './components/login/Additem';
+export const itemContext = createContext({});
 function App() {
+  const [loggedUserID, setLoggedUserID] = useState();
+  const [loggedUserItems, setLoggedUserItems] = useState([]);
+  // const [loggedUserItems, setLoggedUserItems] = useState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <itemContext.Provider
+      value={{
+        loggedUserID,
+        setLoggedUserID,
+        loggedUserItems,
+        setLoggedUserItems,
+      }}
+    >
+      <Router>
+        <Routes>
+          <Route path='/' element={<Login />} />
+          <Route path='/home' element={<Home />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/additem' element={<Additem />} />
+        </Routes>
+      </Router>
+    </itemContext.Provider>
+    // <>hello</>
   );
 }
 
